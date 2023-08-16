@@ -4,9 +4,13 @@ import { Organization } from "../schemas/organizations";
 export const createOrganization = async (
   organization: Organization
 ): Promise<Organization> => {
-  const [row] = await db("organizations").insert(organization).returning("*");
+  const [row] = await db("organizations")
+    .insert(organization)
+    .onConflict("name")
+    .ignore()
+    .returning("*");
 
-  return row as Organization;
+  return (row || {}) as Organization;
 };
 
 export const fetchOrganizationByName = async (
