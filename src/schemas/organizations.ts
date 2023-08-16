@@ -4,7 +4,7 @@ const organizationSchema = z.object({
   id: z.string().uuid(),
   name: z.string(),
   main_url: z.string().url(),
-  created_at: z.coerce.date()
+  created_at: z.coerce.date().default(new Date())
 });
 
 export type Organization = z.infer<typeof organizationSchema>;
