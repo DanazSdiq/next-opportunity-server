@@ -12,5 +12,5 @@ export const createOrganizationsController = async (
   );
   const response = await Promise.all(promises);
 
-  return res.json(response);
+  return res.status(201).json(response);
 };

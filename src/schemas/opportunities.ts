@@ -10,17 +10,21 @@ const opportunitySchema = z.object({
   url: z.string().url(),
 
   created_at: z.coerce.date().default(new Date()),
-  updated_at: z.coerce.date(),
-  deleted_at: z.coerce.date() || z.null()
+  updated_at: z.coerce.date().optional(),
+  deleted_at: z.coerce.date().optional()
 });
 
 export type Opportunity = z.infer<typeof opportunitySchema>;
 
-const createOpportunitiesSchema = z.array(
-  z.union([
-    opportunitySchema.omit({ id: true, updated_at: true, deleted_at: true }),
-    z.object({ organization_name: z.string() })
-  ])
+const createOpportunitiesSchema = z.intersection(
+  opportunitySchema.omit({
+    organization_id: true,
+    updated_at: true,
+    deleted_at: true
+  }),
+  z.object({ organization_name: z.string() })
 );
-export const parseCreateOpportunitiesData = (opportunities: Opportunity[]) =>
-  createOpportunitiesSchema.safeParse(opportunities);
+export type OpportunityRequest = z.infer<typeof createOpportunitiesSchema>;
+export const parseCreateOpportunitiesData = (
+  opportunities: OpportunityRequest
+) => z.array(createOpportunitiesSchema).safeParse(opportunities);

@@ -1,12 +1,14 @@
 import db from "../connections/db";
-import { Opportunity } from "../schemas";
+import { Opportunity, OpportunityRequest } from "../schemas";
 
 export const createOpportunity = async (
   opportunity: Opportunity
 ): Promise<Opportunity> => {
   const [record] = (await db("opportunities")
     .insert(opportunity)
-    .returning("*")) as Opportunity[];
+    .returning("*")
+    .onConflict("url")
+    .ignore()) as Opportunity[];
 
   return record;
 };
