@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { fetchOpportunities } from "../../dao";
 
 export const fetchOpportunitiesController = async (
-  req: Request,
+  _req: Request,
   res: Response
 ) => {
   const opportunities = await fetchOpportunities();
