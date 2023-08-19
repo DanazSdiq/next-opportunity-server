@@ -28,3 +28,25 @@ export const fetchOpportunities = async (): Promise<Opportunity[]> => {
     )
     .where({ deleted_at: null });
 };
+
+export const fetchFullOpportunityDetailsById = async (
+  opportunity_id: string
+): Promise<Opportunity> => {
+  const [opportunity] = await db("opportunities")
+    .select(
+      "opportunities.id",
+      "title",
+      "organizations.name as organization_name",
+      "organization_id",
+      "description",
+      "labels",
+      "commitment",
+      "url",
+      "opportunities.created_at",
+      "updated_at"
+    )
+    .join("organizations", "organizations.id", "opportunities.organization_id")
+    .where({ "opportunities.id": opportunity_id, deleted_at: null });
+
+  return opportunity;
+};

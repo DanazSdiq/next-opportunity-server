@@ -16,7 +16,7 @@ const opportunitySchema = z.object({
 
 export type Opportunity = z.infer<typeof opportunitySchema>;
 
-const createOpportunitiesSchema = z.intersection(
+export const createOpportunitySchema = z.intersection(
   opportunitySchema.omit({
     organization_id: true,
     updated_at: true,
@@ -24,7 +24,8 @@ const createOpportunitiesSchema = z.intersection(
   }),
   z.object({ organization_name: z.string() })
 );
-export type OpportunityRequest = z.infer<typeof createOpportunitiesSchema>;
-export const parseCreateOpportunitiesData = (
-  opportunities: OpportunityRequest
-) => z.array(createOpportunitiesSchema).safeParse(opportunities);
+export type OpportunityRequest = z.infer<typeof createOpportunitySchema>;
+
+export const fetchOpportunityByIdQueryParamsSchema = z.string().uuid();
+
+export const createOpportunitiesSchema = z.array(createOpportunitySchema);

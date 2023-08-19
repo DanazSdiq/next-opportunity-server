@@ -9,6 +9,6 @@ const organizationSchema = z.object({
 
 export type Organization = z.infer<typeof organizationSchema>;
 
-const createOrganizationSchema = z.array(organizationSchema.omit({ id: true }));
-export const parseCreateOrganizationsData = (organizations: Organization[]) =>
-  createOrganizationSchema.safeParse(organizations);
+export const createOrganizationSchema = z.array(
+  organizationSchema.omit({ id: true })
+);

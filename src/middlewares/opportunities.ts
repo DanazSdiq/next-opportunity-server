@@ -1,16 +1,27 @@
 import { NextFunction, Request, Response } from "express";
-import { parseCreateOpportunitiesData } from "../schemas";
+import {
+  createOpportunitiesSchema,
+  fetchOpportunityByIdQueryParamsSchema
+} from "../schemas";
+import { validateRequest } from "../utils";
 
-export const validateCreateOpportunities = async (
+export const validateCreateOpportunities = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const result = parseCreateOpportunitiesData(req.body);
-  if (!result.success) {
-    return res.status(400).json({ error: result.error });
-  }
+  validateRequest(req.body, createOpportunitiesSchema, res, next);
+};
 
-  req.body = result.data;
-  next();
+export const validateFetchOpportunityById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  validateRequest(
+    req.params.id,
+    fetchOpportunityByIdQueryParamsSchema,
+    res,
+    next
+  );
 };
