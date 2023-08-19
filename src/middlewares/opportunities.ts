@@ -1,21 +1,16 @@
 import { NextFunction, Request, Response } from "express";
 import {
-  parseCreateOpportunitiesData,
-  parseFetchOpportunityByIdParams
+  createOpportunitiesSchema,
+  fetchOpportunityByIdQueryParamsSchema
 } from "../schemas";
+import { validateRequest } from "../utils";
 
 export const validateCreateOpportunities = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const result = parseCreateOpportunitiesData(req.body);
-  if (!result.success) {
-    return res.status(400).json({ error: result.error });
-  }
-
-  req.body = result.data;
-  next();
+  validateRequest(req.body, createOpportunitiesSchema, res, next);
 };
 
 export const validateFetchOpportunityById = async (
@@ -23,10 +18,10 @@ export const validateFetchOpportunityById = async (
   res: Response,
   next: NextFunction
 ) => {
-  const result = parseFetchOpportunityByIdParams(req.params.id);
-  if (!result.success) {
-    return res.status(400).json({ error: result.error });
-  }
-
-  next();
+  validateRequest(
+    req.params.id,
+    fetchOpportunityByIdQueryParamsSchema,
+    res,
+    next
+  );
 };
