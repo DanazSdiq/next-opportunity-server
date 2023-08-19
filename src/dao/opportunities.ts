@@ -36,6 +36,7 @@ export const fetchFullOpportunityDetailsById = async (
     .select(
       "opportunities.id",
       "title",
+      "organizations.name as organization_name",
       "organization_id",
       "description",
       "labels",
