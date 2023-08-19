@@ -9,7 +9,7 @@ export const fetchOpportunitiesController = async (
 
   if (opportunity_id) {
     const opportunity = await fetchFullOpportunityDetailsById(opportunity_id);
-    return res.status(201).json(opportunity);
+    return res.status(200).json(opportunity);
   }
 
   const opportunities = await fetchOpportunities();
