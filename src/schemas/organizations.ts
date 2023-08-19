@@ -9,5 +9,6 @@ const organizationSchema = z.object({
 
 export type Organization = z.infer<typeof organizationSchema>;
 
-export const createOrganizationSchema = z.array(organizationSchema.omit({ id: true }));
-
+export const createOrganizationSchema = z.array(
+  organizationSchema.omit({ id: true })
+);
