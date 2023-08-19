@@ -28,3 +28,6 @@ export type OpportunityRequest = z.infer<typeof createOpportunitiesSchema>;
 export const parseCreateOpportunitiesData = (
   opportunities: OpportunityRequest
 ) => z.array(createOpportunitiesSchema).safeParse(opportunities);
+
+export const parseFetchOpportunityByIdParams = (opportunityId: string) =>
+  z.string().uuid().safeParse(opportunityId);

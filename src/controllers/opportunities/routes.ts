@@ -1,6 +1,9 @@
 import { Router } from "express";
 import { createOpportunitiesController } from "./createOpportunities";
-import { validateCreateOpportunities } from "../../middlewares";
+import {
+  validateCreateOpportunities,
+  validateFetchOpportunityById
+} from "../../middlewares";
 import { fetchOpportunitiesController } from "./fetchOpportunities";
 
 const opportunitiesRouter = Router();
@@ -14,5 +17,11 @@ opportunitiesRouter.post(
 );
 
 opportunitiesRouter.get("/", fetchOpportunitiesController);
+
+opportunitiesRouter.get(
+  "/:id",
+  validateFetchOpportunityById,
+  fetchOpportunitiesController
+);
 
 export { opportunitiesRouter };
