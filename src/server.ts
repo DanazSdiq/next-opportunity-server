@@ -2,8 +2,8 @@ import express, { Express } from "express";
 import cors from "cors";
 import morgan from "morgan";
 import { config } from "./config";
-import { opportunitiesRouter } from "./controllers/opportunities";
-import { organizationsRouter } from "./controllers/organizations";
+import { opportunitiesRouter } from "./controllers/opportunities/routes";
+import { organizationsRouter } from "./controllers/organizations/routes";
 
 const app: Express = express();
 
