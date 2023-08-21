@@ -48,3 +48,12 @@ export const fetchOrganizationsDetails = async (
         })
     );
 };
+
+export const fetchOrganizationOpportunities = async (
+  organization_id: string
+) => {
+  return db("organizations as org")
+    .select("op.*")
+    .join("opportunities as op", "op.organization_id", "org.id")
+    .where({ "op.deleted_at": null, "org.id": organization_id });
+};
