@@ -2,9 +2,7 @@ import { Router } from "express";
 import { createOrganizationsController } from "./createOrganizations";
 import { validateCreateOrganizations } from "../../middlewares/organizations";
 import { fetchOrganizationsController } from "./fetchOrganizations";
-import {
-  fetchOrganizationOpportunitiesController
-} from "./fetchOrganizationOpportunities";
+import { fetchOrganizationOpportunitiesController } from "./fetchOrganizationOpportunities";
 
 const organizationsRouter = Router();
 
