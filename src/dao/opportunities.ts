@@ -23,6 +23,7 @@ export const fetchOpportunities = async (): Promise<Opportunity[]> => {
       "labels",
       "commitment",
       "url",
+      "is_viewed",
       "created_at",
       "updated_at"
     )
@@ -42,6 +43,7 @@ export const fetchFullOpportunityDetailsById = async (
       "labels",
       "commitment",
       "url",
+      "is_viewed",
       "opportunities.created_at",
       "updated_at"
     )
@@ -49,4 +51,16 @@ export const fetchFullOpportunityDetailsById = async (
     .where({ "opportunities.id": opportunity_id, deleted_at: null });
 
   return opportunity;
+};
+
+export const updateOpportunityView = async (
+  opportunity_id: string,
+  is_viewed: boolean
+): Promise<Opportunity> => {
+  const [row] = await db("opportunities")
+    .update({ is_viewed })
+    .where({ id: opportunity_id })
+    .returning("*");
+
+  return row;
 };
