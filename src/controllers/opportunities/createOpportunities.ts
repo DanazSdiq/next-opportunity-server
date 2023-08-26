@@ -43,7 +43,11 @@ const findOrganizationIdForOpportunities = async (
       (org) => org.name === organization_name
     );
 
-    return { organization_id: organization!.id, ...opportunity };
+    return {
+      organization_id: organization!.id,
+      is_viewed: false,
+      ...opportunity
+    };
   });
 };
 

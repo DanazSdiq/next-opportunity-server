@@ -5,6 +5,7 @@ import {
   validateFetchOpportunityById
 } from "../../middlewares";
 import { fetchOpportunitiesController } from "./fetchOpportunities";
+import { viewedOpportunities } from "./viewedOpportunities";
 
 const opportunitiesRouter = Router();
 
@@ -23,5 +24,7 @@ opportunitiesRouter.get(
   validateFetchOpportunityById,
   fetchOpportunitiesController
 );
+
+opportunitiesRouter.patch("/:id", viewedOpportunities);
 
 export { opportunitiesRouter };
