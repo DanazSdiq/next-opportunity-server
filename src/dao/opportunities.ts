@@ -27,7 +27,8 @@ export const fetchOpportunities = async (): Promise<Opportunity[]> => {
       "created_at",
       "updated_at"
     )
-    .where({ deleted_at: null });
+    .where({ deleted_at: null })
+    .orderBy("is_viewed", "asc");
 };
 
 export const fetchFullOpportunityDetailsById = async (
