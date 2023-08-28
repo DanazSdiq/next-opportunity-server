@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { createOpportunity } from "../../dao";
 import { fetchOrganizationByName } from "../../dao/organizations";
 import { Opportunity, OpportunityRequest } from "../../schemas";
@@ -6,19 +6,24 @@ import { Organization } from "../../schemas/organizations";
 
 export const createOpportunitiesController = async (
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) => {
-  const opportunities: OpportunityRequest[] = req.body;
-  const opportunitiesWithOrganizationId: Opportunity[] =
-    await findOrganizationIdForOpportunities(opportunities);
-  const promises = opportunitiesWithOrganizationId.map((opportunity) =>
-    createOpportunity(opportunity)
-  );
-  const newOpportunities = (await Promise.all(promises)).filter(
-    (op) => typeof op === "object"
-  );
+  try {
+    const opportunities: OpportunityRequest[] = req.body;
+    const opportunitiesWithOrganizationId: Opportunity[] =
+      await findOrganizationIdForOpportunities(opportunities);
+    const promises = opportunitiesWithOrganizationId.map((opportunity) =>
+      createOpportunity(opportunity)
+    );
+    const newOpportunities = (await Promise.all(promises)).filter(
+      (op) => typeof op === "object"
+    );
 
-  res.status(201).json(newOpportunities);
+    res.status(201).json(newOpportunities);
+  } catch (error) {
+    next(error);
+  }
 };
 
 const findOrganizationIdForOpportunities = async (

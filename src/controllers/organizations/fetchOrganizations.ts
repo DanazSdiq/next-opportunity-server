@@ -1,12 +1,17 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { fetchOrganizationsDetails } from "../../dao/organizations";
 
 export const fetchOrganizationsController = async (
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) => {
-  const id = req.params.id || "";
-  const result = await fetchOrganizationsDetails(id);
+  try {
+    const id = req.params.id || "";
+    const result = await fetchOrganizationsDetails(id);
 
-  res.status(200).json(result);
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
 };
