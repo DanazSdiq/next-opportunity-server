@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import {
   fetchOrganizationOpportunities,
   fetchOrganizationsDetails
@@ -6,11 +6,18 @@ import {
 
 export const fetchOrganizationOpportunitiesController = async (
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) => {
-  const organization_id = req.params.id || "";
-  const [organization] = await fetchOrganizationsDetails(organization_id);
-  const response = await fetchOrganizationOpportunities(organization_id);
+  try {
+    const organization_id = req.params.id || "";
+    const [organization] = await fetchOrganizationsDetails(organization_id);
+    const response = await fetchOrganizationOpportunities(organization_id);
 
-  res.status(200).json({ organization: organization, opportunities: response });
+    res
+      .status(200)
+      .json({ organization: organization, opportunities: response });
+  } catch (error) {
+    next(error);
+  }
 };
