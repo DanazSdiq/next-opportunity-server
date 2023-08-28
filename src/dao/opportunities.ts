@@ -8,7 +8,7 @@ export const createOpportunity = async (
     .insert(opportunity)
     .returning("*")
     .onConflict("url")
-    .ignore()) as Opportunity[];
+    .merge({ updated_at: new Date() })) as Opportunity[];
 
   return record;
 };
