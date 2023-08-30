@@ -1,4 +1,9 @@
-import express, { ErrorRequestHandler, Express } from "express";
+import express, {
+  ErrorRequestHandler,
+  Express,
+  Request,
+  Response
+} from "express";
 import cors from "cors";
 import morgan from "morgan";
 import { config } from "./config";
@@ -15,6 +20,10 @@ app.use(morgan("dev"));
 
 app.use("/opportunities", opportunitiesRouter);
 app.use("/organizations", organizationsRouter);
+
+app.get("/test", (_req: Request, res: Response) => {
+  res.json({ success: true });
+});
 
 const errorHandler: ErrorRequestHandler = (error, _req, res) => {
   console.log(`error ${error.message}`);
