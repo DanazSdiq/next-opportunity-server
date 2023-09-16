@@ -6,6 +6,8 @@ COPY ./package*.json .
 RUN npm install . 
 
 COPY . .
-EXPOSE 3003
+RUN npm run build
 
 CMD ["npm", "run", "start"]
+
+EXPOSE 3003
