@@ -2,6 +2,9 @@
 
 This repository is the server side of the next opportunities application. This is built using Express in TypeScript and Knex as a query builder.
 
+## Run Functioning Instance Locally
+Head over to [this repository](https://github.com/DanazSdiq/next-opportunity-docker) and follow the instructions on README page 
+
 ## How Does All of This Work?
 ![next-opportunity layout](./next-opportunity-layout.jpg)
 
